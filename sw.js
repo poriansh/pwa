@@ -13,6 +13,7 @@ self.addEventListener("install", () => {
 self.addEventListener("activate", (event) => {
   console.log("Service Worker activated!");
 });
+
 // fetch data source project
 self.addEventListener("fetch", (e) => {
   // e.respondWith(null);   از کش بخون
