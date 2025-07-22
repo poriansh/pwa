@@ -21,6 +21,7 @@ self.addEventListener("activate", (event) => {
     // پاک کردن کش های قدیمی 
     caches.keys().then((cacheNames) => {
       return Promise.all(
+        
         cacheNames.map((cacheName) => {
           // حذف همه کش‌ها به‌جز کش فعلی
           if (cacheName !== activeCach.assetscache) {
