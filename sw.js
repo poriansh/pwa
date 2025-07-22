@@ -20,3 +20,5 @@ self.addEventListener("fetch", (e) => {
   e.respondWith(fetch(e.request)); // یا از شبکه بخون
   e.respondWith
 });
+
+
