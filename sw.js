@@ -1,16 +1,17 @@
 // install service worker
-const cachversion = 10;
+const cachversion = 1;
 const activeCach = {
-  assetscache: `cach-${cachversion}`,
+  static: `Static-${cachversion}`,
+  dynamic: `dynamic-${cachversion}`,
 };
 self.addEventListener("install", (e) => {
   self.skipWaiting(); // update automatically service worker
   e.waitUntil(
     // اول کش بشه بعد بره به ایونت های دیگ
-    caches.open(activeCach["assetscache"]).then((Cache) => {
+    caches.open(activeCach["static"]).then((Cache) => {
       //Cache.add("style/index.css"); //  add chach file
       //Cache.add("/app.js"); //  add chach file
-      Cache.addAll(["/", "style/index.css", "/app.js"]);
+      Cache.addAll(["/", "/app.js", "/fallback.html"]);
     })
   );
 });
@@ -18,13 +19,12 @@ self.addEventListener("install", (e) => {
 // activate service worker
 self.addEventListener("activate", (event) => {
   event.waitUntil(
-    // پاک کردن کش های قدیمی 
+    // پاک کردن کش های قدیمی
     caches.keys().then((cacheNames) => {
       return Promise.all(
-        
         cacheNames.map((cacheName) => {
           // حذف همه کش‌ها به‌جز کش فعلی
-          if (cacheName !== activeCach.assetscache) {
+          if (cacheName !== activeCach.static) {
             return caches.delete(cacheName);
           }
         })
@@ -35,15 +35,46 @@ self.addEventListener("activate", (event) => {
 
 // fetch data source project
 self.addEventListener("fetch", (e) => {
-  // e.respondWith(null);   از کش بخون
+  // e.respondWith(caches.match(e.request));   از کش بخون
   //e.respondWith(fetch(e.request)); // یا از شبکه بخون
-  e.respondWith(
-    caches.match(e.request).then((res) => {
-      if (res) {
-        return res;
-      } else {
-        return fetch(e.request);
-      }
-    })
+  // first cache -  second network
+  // e.respondWith(
+  //   caches.match(e.request).then((res) => {
+  //     if (res) {
+  //       return res;
+  //     } else {
+  //       return fetch(e.request)
+  //         .then((serverRes) => {
+  //           return caches.open(activeCach["dynamic"]).then((cache) => {
+  //             cache.put(e.request, serverRes.clone());
+  //             return serverRes;
+  //           });
+  //         })
+  //         .catch((err) => {
+  //           // اگر fetch از اینترنت هم شکست خورد (مثلاً آفلاین بود)
+  //           return caches.match("/fallback.html");
+  //         });
+  //     }
+  //   })
+  // );
+
+  // first network -  second cache
+  return e.respondWith(
+    fetch(e.request)
+      .then((res) => {
+        return caches.open(activeCach["dynamic"]).then((cache) => {
+          cache.put(e.request, res.clone());
+          return res;
+        });
+      })
+      .catch(() => {
+        return caches.match(e.request).then((res) => {
+          if (res) {
+            return res;
+          } else {
+            return caches.match("/fallback.html");
+          }
+        });
+      })
   );
 });
