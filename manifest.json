@@ -1,17 +1,22 @@
 {
-  "short_name": "Weather",
+  "short_name": "pwa app", 
   "name": "Weather: Do I need an umbrella?",
+  "display": "standalone",
   "icons": [
     {
       "src": "icon-192.png",
       "type": "image/png",
       "sizes": "192x192"
+    },
+    {
+      "src": "icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
     }
   ],
   "id": "/",
   "start_url": "/",
   "background_color": "#3367D6",
-  "display": "standalone",
   "scope": "/",
   "theme_color": "#3367D6",
   "shortcuts": [
@@ -20,7 +25,7 @@
       "short_name": "Today",
       "description": "View weather information for today",
       "url": "/today?source=pwa",
-      "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
+      "icons": [{ "src": "icon-512.png", "sizes": "512x512" }]
     },
     {
       "name": "How's the weather tomorrow?",
@@ -37,6 +42,12 @@
       "type": "image/png",
       "sizes": "192x192",
       "form_factor": "narrow"
+    },
+    {
+      "src": "icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "form_factor": "narrow2"
     }
   ]
 }
