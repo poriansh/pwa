@@ -1,11 +1,13 @@
 // install service worker
+// وقتی که سرویس‌ورکر برای اولین بار نصب میشه یا آپدیت میشه
 const cachversion = 1;
 const activeCach = {
   static: `Static-${cachversion}`,
   dynamic: `dynamic-${cachversion}`,
 };
-self.addEventListener("install", (e) => {
-  self.skipWaiting(); // update automatically service worker
+
+self.addEventListener("install", (e) => { 
+  self.skipWaiting(); // activate automatically service worker
   e.waitUntil(
     // اول کش بشه بعد بره به ایونت های دیگ
     caches.open(activeCach["static"]).then((Cache) => {
