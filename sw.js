@@ -8,14 +8,14 @@ const activeCach = {
 
 self.addEventListener("install", (e) => { 
   self.skipWaiting(); // activate automatically service worker
-  e.waitUntil(
+  // e.waitUntil(
     // اول کش بشه بعد بره به ایونت های دیگ
-    caches.open(activeCach["static"]).then((Cache) => {
+    // caches.open(activeCach["static"]).then((Cache) => {
       //Cache.add("style/index.css"); //  add chach file
       //Cache.add("/app.js"); //  add chach file
-      Cache.addAll(["/", "/app.js", "/fallback.html"]);
-    })
-  );
+      // Cache.addAll(["/", "/app.js", "/fallback.html"]);
+    // })
+  // );
 });
 
 // activate service worker
@@ -53,7 +53,7 @@ self.addEventListener("fetch", (e) => {
   //           });
   //         })
   //         .catch((err) => {
-  //           // اگر fetch از اینترنت هم شکست خورد (مثلاً آفلاین بود)
+  //           اگر fetch از اینترنت هم شکست خورد (مثلاً آفلاین بود)
   //           return caches.match("/fallback.html");
   //         });
   //     }
