@@ -1,6 +1,6 @@
 // install service worker
 // وقتی که سرویس‌ورکر برای اولین بار نصب میشه یا آپدیت میشه
-const cachversion = 6;
+const cachversion = 7;
 const activeCach = {
   static: `Static-${cachversion}`,
   dynamic: `dynamic-${cachversion}`,
