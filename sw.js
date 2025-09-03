@@ -1,6 +1,16 @@
 // install service worker
-// وقتی که سرویس‌ورکر برای اولین بار نصب میشه یا آپدیت میشه
-const cachversion = 8;
+// وقتی که سرویس‌ورکر برای اولین بار نصب میشه یا آپدیت
+
+const limitInCache = (key, size) => {
+  caches.open(key).then((cache) => {
+    cache.keys().then((keys) => {
+      if (keys.length > size) {
+        cache.delete(keys[0]).then(limitInCache(key, size));
+      }
+    });
+  });
+};
+const cachversion = 10;
 const activeCach = {
   static: `Static-${cachversion}`,
   dynamic: `dynamic-${cachversion}`,
@@ -29,7 +39,6 @@ self.addEventListener("activate", (event) => {
           if (cacheName !== activeCach.static) {
             return caches.delete(cacheName);
           }
-          
         })
       );
     })
@@ -65,8 +74,9 @@ self.addEventListener("fetch", (e) => {
   return e.respondWith(
     fetch(e.request)
       .then((res) => {
-        return caches.open(activeCach["dynamic"]).then((cache) => {
+         return caches.open(activeCach["dynamic"]).then((cache) => {
           cache.put(e.request, res.clone());
+          limitInCache(activeCach["dynamic"], 10);
           return res;
         });
       })
