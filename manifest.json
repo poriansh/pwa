@@ -19,7 +19,7 @@
   "id": "/",
   "start_url": "/pwa",
   "background_color": "#3367D6",
-  "scope": "/",
+  "scope": "/pwa",
   "theme_color": "#3367D6",
   "shortcuts": [
     {
