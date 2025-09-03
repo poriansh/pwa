@@ -53,9 +53,7 @@ self.addEventListener("fetch", (e) => {
 
   const apiBase = "https://fakestoreapi.com";
   if (e.request.url.startsWith(apiBase)) {
-    return e.respondWith(fetch(e.request)).then((res) => {
-      return res;
-    });
+    return e.respondWith(fetch(e.request));
   } else {
     e.respondWith(
       caches.match(e.request).then((res) => {
