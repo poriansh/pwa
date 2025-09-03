@@ -13,7 +13,7 @@ self.addEventListener("install", (e) => {
     caches.open(activeCach["static"]).then((Cache) => {
       //Cache.add("style/index.css"); //  add chach file
       //Cache.add("/app.js"); //  add chach file
-      Cache.add("/fallback.html");
+      Cache.add("/pwa/fallback.html");
     })
   );
 });
@@ -75,7 +75,7 @@ self.addEventListener("fetch", (e) => {
           if (res) {
             return res;
           } else {
-            return caches.match("/fallback.html");
+            return caches.match("/pwa/fallback.html");
           }
         });
       })
