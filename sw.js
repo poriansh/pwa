@@ -23,7 +23,7 @@ self.addEventListener("install", (e) => {
     caches.open(activeCach["static"]).then((Cache) => {
       //Cache.add("style/index.css"); //  add chach file
       //Cache.add("/app.js"); //  add chach file
-      Cache.add("/fallback.html");
+      Cache.add("fallback.html");
     })
   );
 });
@@ -69,7 +69,7 @@ self.addEventListener("fetch", (e) => {
             })
             .catch((err) => {
               //اگر fetch از اینترنت هم شکست خورد (مثلاً آفلاین بود)
-              return caches.match("/fallback.html");
+              return caches.match("fallback.html");
             });
         }
       })
