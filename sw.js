@@ -10,7 +10,7 @@ const limitInCache = (key, size) => {
     });
   });
 };
-const cachversion = 10;
+const cachversion = 6;
 const activeCach = {
   static: `Static-${cachversion}`,
   dynamic: `dynamic-${cachversion}`,
@@ -50,44 +50,54 @@ self.addEventListener("fetch", (e) => {
   // e.respondWith(caches.match(e.request));   از کش بخون
   //e.respondWith(fetch(e.request)); // یا از شبکه بخون
   // first cache -  second network
-  // e.respondWith(
-  //   caches.match(e.request).then((res) => {
-  //     if (res) {
-  //       return res;
-  //     } else {
-  //       return fetch(e.request)
-  //         .then((serverRes) => {
-  //           return caches.open(activeCach["dynamic"]).then((cache) => {
-  //             cache.put(e.request, serverRes.clone());
-  //             return serverRes;
-  //           });
-  //         })
-  //         .catch((err) => {
-  //           اگر fetch از اینترنت هم شکست خورد (مثلاً آفلاین بود)
-  //           return caches.match("/fallback.html");
-  //         });
-  //     }
-  //   })
-  // );
+
+  const apiBase = "https://fakestoreapi.com";
+  if (e.request.url.startsWith(apiBase)) {
+    return e.respondWith(fetch(e.request)).then((res) => {
+      return res;
+    });
+  } else {
+    e.respondWith(
+      caches.match(e.request).then((res) => {
+        if (res) {
+          return res;
+        } else {
+          return fetch(e.request)
+            .then((serverRes) => {
+              return caches.open(activeCach["dynamic"]).then((cache) => {
+                cache.put(e.request, serverRes.clone());
+                return serverRes;
+              });
+            })
+            .catch((err) => {
+              //اگر fetch از اینترنت هم شکست خورد (مثلاً آفلاین بود)
+              return caches.match("/fallback.html");
+            });
+        }
+      })
+    );
+  }
 
   // first network -  second cache
-  return e.respondWith(
-    fetch(e.request)
-      .then((res) => {
-         return caches.open(activeCach["dynamic"]).then((cache) => {
-          cache.put(e.request, res.clone());
-          limitInCache(activeCach["dynamic"], 10);
-          return res;
-        });
-      })
-      .catch(() => {
-        return caches.match(e.request).then((res) => {
-          if (res) {
-            return res;
-          } else {
-            return caches.match("fallback.html");
-          }
-        });
-      })
-  );
+  //https://fakestoreapi.com/products
+
+  // return e.respondWith(
+  //   fetch(e.request)
+  //     .then((res) => {
+  //       return caches.open(activeCach["dynamic"]).then((cache) => {
+  //         cache.put(e.request, res.clone());
+  //         limitInCache(activeCach["dynamic"], 10);
+  //         return res;
+  //       });
+  //     })
+  //     .catch(() => {
+  //       return caches.match(e.request).then((res) => {
+  //         if (res) {
+  //           return res;
+  //         } else {
+  //           return caches.match("fallback.html");
+  //         }
+  //       });
+  //     })
+  // );
 });
