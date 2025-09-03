@@ -1,21 +1,21 @@
 // install service worker
 // وقتی که سرویس‌ورکر برای اولین بار نصب میشه یا آپدیت میشه
-const cachversion = 1;
+const cachversion = 6;
 const activeCach = {
   static: `Static-${cachversion}`,
   dynamic: `dynamic-${cachversion}`,
 };
-
-self.addEventListener("install", (e) => { 
+///
+self.addEventListener("install", (e) => {
   self.skipWaiting(); // activate automatically service worker
-  // e.waitUntil(
-    // اول کش بشه بعد بره به ایونت های دیگ
-    // caches.open(activeCach["static"]).then((Cache) => {
+  e.waitUntil(
+    // اول کش بشه بعد بره به ایونت های دیگر
+    caches.open(activeCach["static"]).then((Cache) => {
       //Cache.add("style/index.css"); //  add chach file
       //Cache.add("/app.js"); //  add chach file
-      // Cache.addAll(["/", "/app.js", "/fallback.html"]);
-    // })
-  // );
+      Cache.add("/fallback.html");
+    })
+  );
 });
 
 // activate service worker
@@ -29,6 +29,7 @@ self.addEventListener("activate", (event) => {
           if (cacheName !== activeCach.static) {
             return caches.delete(cacheName);
           }
+          
         })
       );
     })
