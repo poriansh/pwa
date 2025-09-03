@@ -5,13 +5,13 @@
   "display": "standalone",
   "icons": [
     {
-      "src": "/assets/icon-192.png",
+      "src": "assets/icon-192.png",
       "type": "image/png",
       "sizes": "192x192"
       
     },
     {
-      "src": "/assets/icon-512.png",
+      "src": "assets/icon-512.png",
       "type": "image/png",
       "sizes": "512x512"
     }
@@ -27,20 +27,20 @@
       "short_name": "Today",
       "description": "View weather information for today",
       "url": "/today?source=pwa",
-      "icons": [{ "src": "/assets/icon-512.png", "sizes": "512x512" }]
+      "icons": [{ "src": "assets/icon-512.png", "sizes": "512x512" }]
     },
     {
       "name": "How's the weather tomorrow?",
       "short_name": "Tomorrow",
       "description": "View weather information for tomorrow",
       "url": "/tomorrow?source=pwa",
-      "icons": [{ "src": "/assets/icon-192.png", "sizes": "192x192" }]
+      "icons": [{ "src": "assets/icon-192.png", "sizes": "192x192" }]
     }
   ],
   "description": "Weather forecast information",
   "screenshots": [
     {
-      "src": "/assets/icon-192.png",
+      "src": "assets/icon-192.png",
       "type": "image/png",
       "sizes": "192x192",
       "form_factor": "narrow"

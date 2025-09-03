@@ -1,6 +1,6 @@
 // install service worker
 // وقتی که سرویس‌ورکر برای اولین بار نصب میشه یا آپدیت میشه
-const cachversion = 7;
+const cachversion = 8;
 const activeCach = {
   static: `Static-${cachversion}`,
   dynamic: `dynamic-${cachversion}`,
@@ -13,7 +13,7 @@ self.addEventListener("install", (e) => {
     caches.open(activeCach["static"]).then((Cache) => {
       //Cache.add("style/index.css"); //  add chach file
       //Cache.add("/app.js"); //  add chach file
-      Cache.add("/fallback.html");
+      Cache.add("fallback.html");
     })
   );
 });
@@ -75,7 +75,7 @@ self.addEventListener("fetch", (e) => {
           if (res) {
             return res;
           } else {
-            return caches.match("/fallback.html");
+            return caches.match("fallback.html");
           }
         });
       })
