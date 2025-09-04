@@ -10,7 +10,7 @@ const limitInCache = (key, size) => {
     });
   });
 };
-const cachversion = 4;
+const cachversion = 5;
 const activeCach = {
   static: `Static-${cachversion}`,
   dynamic: `dynamic-${cachversion}`,
@@ -98,4 +98,18 @@ self.addEventListener("fetch", (e) => {
   //       });
   //     })
   // );
+});
+
+self.addEventListener("notificationclick", (e) => {
+const action = e.action;
+const notification = e.notification;
+notification.close();
+if (action === "confirm") {
+  console.log("confirm");
+} else if (action === "reject") {
+  console.log("reject");
+}
+});
+self.addEventListener("notificationclose", (e) => {
+  console.log("notification closed");
 });
