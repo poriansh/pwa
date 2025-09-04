@@ -42,6 +42,19 @@ function getNotifications(){
         dir: "rtl",
         vibrate: [100, 50, 100],
         icon: "assets/icon-512.png",
+        badge: "assets/icon-512.png",
+        image: "assets/icon-512.png",
+        tag: "sw test notification",
+        actions: [
+          {
+            action: "confirm",
+            title: "accept",
+          },
+          {
+            action: "reject",
+            title: "reject",
+          }
+        ]
       });
     });
    }

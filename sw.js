@@ -10,7 +10,7 @@ const limitInCache = (key, size) => {
     });
   });
 };
-const cachversion = 4;
+const cachversion = 5;
 const activeCach = {
   static: `Static-${cachversion}`,
   dynamic: `dynamic-${cachversion}`,
