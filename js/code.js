@@ -37,7 +37,7 @@ function getNotifications(){
   Notification.requestPermission().then((permission)=>{
    if("serviceWorker" in navigator){
     navigator.serviceWorker.ready.then((sw)=>{
-      sw.showNotification("دسترسی داده شد");
+      sw.showNotification(" sw دسترسی داده شد");
     });
    }
   });
