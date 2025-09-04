@@ -87,7 +87,7 @@ const getPushSubscription = async () => {
       applicationServerKey: urlBase64ToUint8Array(publicKey),
     });
     console.log("subscription", subscription.endpoint);
-    
+    return subscription;
   }
 };
 
@@ -97,7 +97,9 @@ function getNotifications() {
       showNotification();
       getcurrentSubscription().then((subscription) => {
         if (!subscription) {
-          getPushSubscription()
+          getPushSubscription().then((subscription) => {
+            sendNotification(subscription);
+          });
         }
       });
     }
