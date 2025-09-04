@@ -50,12 +50,28 @@ const showNotification = async () => {
   }
 };
 
+const urlBase64ToUint8Array = (base64String) => {
+  const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
+  const base64 = (base64String + padding).replace(/-/g, "+").replace(/_/g, "/");
+
+  const rawData = window.atob(base64);
+  const outputArray = new Uint8Array(rawData.length);
+
+  for (let i = 0; i < rawData.length; ++i) {
+    outputArray[i] = rawData.charCodeAt(i);
+  }
+  return outputArray;
+}
+
+
 const getPushSubscription = async () => {
   if ("serviceWorker" in navigator) {
     const serviceWorker = await navigator.serviceWorker.ready;
+    const publicKey =
+      "BJGdVGgPBJAWcRxOTZnJMHg2khEQ89xZPwrse0tbOummDe6L3_DHdBGlm44zLvhxZvZjSaAxWDVgHZNR1DFG3i4";
     const subscription = await serviceWorker.pushManager.subscribe({
       userVisibleOnly: true,
-      applicationServerKey: "BGoKbJXGtVw927e14mB2tL8iJgI_Lp4_WxMj75QxU3",
+      applicationServerKey: urlBase64ToUint8Array(publicKey),
     });
     console.log("subscription", subscription);
   } else {
