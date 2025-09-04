@@ -53,7 +53,11 @@ function getNotifications(){
           {
             action: "reject",
             title: "reject",
-          }
+          },
+          {
+            action: "cancel",
+            title: "cancel",
+          },
         ]
       });
     });
