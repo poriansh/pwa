@@ -5,16 +5,15 @@
 
 // Activate → فعال شدن برای کنترل صفحه‌ها.
 
-// Fetch → گوش دادن به درخواست‌ها و پاسخ از کش یا شبکه. 
+// Fetch → گوش دادن به درخواست‌ها و پاسخ از کش یا شبکه.
 
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('sw.js')
-    .then(reg => console.log('Service Worker registered'))
-    .catch(err => console.error('Registration failed', err));
-}else{
-  console.log('Service Worker not supported');
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker
+    .register("sw.js")
+    .then((reg) => console.log("Service Worker registered"))
+    .catch((err) => console.error("Registration failed", err));
+} else {
+  console.log("Service Worker not supported");
 }
 
-
 // Fetch and display products
-

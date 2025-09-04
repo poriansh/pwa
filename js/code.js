@@ -18,5 +18,19 @@ async function fetchProducts() {
     productContainer.innerHTML = `<p>⚠️ Failed to load products.</p>`;
   }
 }
-
 fetchProducts();
+window.addEventListener("load", ()=>{
+  getNotifications();
+});
+function getNotifications(){
+  // روش اول 
+  Notification.requestPermission().then((permission)=>{
+    if(permission === "granted"){
+      new Notification("دسترسی داده شد");
+    }
+  });
+  // روش دوم
+  if(Notification.permission === "granted"){
+    console.log("دسترسی داده شد");
+  }
+}
