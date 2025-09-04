@@ -1,5 +1,5 @@
 const productContainer = document.getElementById('products');
-
+const notificationButton = document.getElementById('notification');
 async function fetchProducts() {
   try {
     const res = await fetch('https://fakestoreapi.com/products');
@@ -19,9 +19,9 @@ async function fetchProducts() {
   }
 }
 fetchProducts();
-window.addEventListener("load", ()=>{
-  getNotifications();
-});
+
+
+
 function getNotifications(){
   // روش اول 
   Notification.requestPermission().then((permission)=>{
@@ -30,7 +30,8 @@ function getNotifications(){
     }
   });
   // روش دوم
-  if(Notification.permission === "granted"){
-    console.log("دسترسی داده شد");
-  }
+  // if(Notification.permission === "granted"){
+  //   console.log("دسترسی داده شد");
+  // }
 }
+notificationButton.addEventListener("click", getNotifications);

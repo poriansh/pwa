@@ -58,4 +58,18 @@ body {
     color: #f39c12;
     font-size: 14px;
   }
+  #notification{
+    background-color: #27ae60;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 20px auto;
+    display: block;
+  }
+  #notification:hover{
+    background-color: #218c5e;
+  }
   
