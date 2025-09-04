@@ -113,3 +113,11 @@ if (action === "confirm") {
 self.addEventListener("notificationclose", (e) => {
   console.log("notification closed");
 });
+
+self.addEventListener("push", (e) => {
+  // show notification
+});
+
+
+
+

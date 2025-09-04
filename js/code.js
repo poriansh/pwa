@@ -25,6 +25,18 @@ async function fetchProducts() {
 }
 fetchProducts();
 
+const urlBase64ToUint8Array = (base64String) => {
+  const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
+  const base64 = (base64String + padding).replace(/-/g, "+").replace(/_/g, "/");
+
+  const rawData = window.atob(base64);
+  const outputArray = new Uint8Array(rawData.length);
+
+  for (let i = 0; i < rawData.length; ++i) {
+    outputArray[i] = rawData.charCodeAt(i);
+  }
+  return outputArray;
+};
 const showNotification = async () => {
   if ("serviceWorker" in navigator) {
     const sw = await navigator.serviceWorker.ready;
@@ -49,21 +61,22 @@ const showNotification = async () => {
     });
   }
 };
-
-const urlBase64ToUint8Array = (base64String) => {
-  const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
-  const base64 = (base64String + padding).replace(/-/g, "+").replace(/_/g, "/");
-
-  const rawData = window.atob(base64);
-  const outputArray = new Uint8Array(rawData.length);
-
-  for (let i = 0; i < rawData.length; ++i) {
-    outputArray[i] = rawData.charCodeAt(i);
-  }
-  return outputArray;
-}
-
-
+const sendNotification = async (subscription) => {
+  const response = await fetch("https://example.com/api/send-notification", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(subscription),
+  });
+  const data = await response.json();
+ 
+};
+const getcurrentSubscription = async () => {
+  const sw = await navigator.serviceWorker.ready;
+  const subscription = await sw.pushManager.getSubscription();
+  return subscription;
+};
 const getPushSubscription = async () => {
   if ("serviceWorker" in navigator) {
     const serviceWorker = await navigator.serviceWorker.ready;
@@ -73,12 +86,24 @@ const getPushSubscription = async () => {
       userVisibleOnly: true,
       applicationServerKey: urlBase64ToUint8Array(publicKey),
     });
+    return subscription;
     console.log("subscription", subscription);
-  } else {
   }
 };
 
 function getNotifications() {
+  Notification.requestPermission().then((permission) => {
+    if (permission === "granted") {
+      showNotification();
+      getcurrentSubscription().then((subscription) => {
+        if (!subscription) {
+          getPushSubscription().then((subscription) => {
+            sendNotification(subscription);
+          });
+        }
+      });
+    }
+  });
   // روش اول
   // Notification.requestPermission().then((permission)=>{
   //   if(permission === "granted"){
@@ -90,11 +115,5 @@ function getNotifications() {
   //   console.log("دسترسی داده شد");
   // }
   // روش سوم noti فقط در service worker باشه
-  Notification.requestPermission().then((permission) => {
-    if (permission === "granted") {
-      getPushSubscription();
-      showNotification();
-    }
-  });
 }
 notificationButton.addEventListener("click", getNotifications);
