@@ -24,14 +24,22 @@ fetchProducts();
 
 function getNotifications(){
   // روش اول 
-  Notification.requestPermission().then((permission)=>{
-    if(permission === "granted"){
-      new Notification("دسترسی داده شد");
-    }
-  });
+  // Notification.requestPermission().then((permission)=>{
+  //   if(permission === "granted"){
+  //     new Notification("دسترسی داده شد");
+  //   }
+  // });
   // روش دوم
   // if(Notification.permission === "granted"){
   //   console.log("دسترسی داده شد");
   // }
+  // روش سوم noti فقط در service worker باشه
+  Notification.requestPermission().then((permission)=>{
+   if("serviceWorker" in navigator){
+    navigator.serviceWorker.ready.then((sw)=>{
+      sw.showNotification("دسترسی داده شد");
+    });
+   }
+  });
 }
 notificationButton.addEventListener("click", getNotifications);
