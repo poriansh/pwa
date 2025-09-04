@@ -37,7 +37,12 @@ function getNotifications(){
   Notification.requestPermission().then((permission)=>{
    if("serviceWorker" in navigator){
     navigator.serviceWorker.ready.then((sw)=>{
-      sw.showNotification(" sw دسترسی داده شد");
+      sw.showNotification(" sw دسترسی داده شد",{
+        body: "دسترسی داده شد",
+        dir: "rtl",
+        vibrate: [100, 50, 100],
+        icon: "assets/icon-512.png",
+      });
     });
    }
   });
