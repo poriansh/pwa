@@ -86,7 +86,7 @@ const getPushSubscription = async () => {
       userVisibleOnly: true,
       applicationServerKey: urlBase64ToUint8Array(publicKey),
     });
-    console.log("subscription", subscription);
+    console.log("subscription", subscription.endpoint);
     
   }
 };
