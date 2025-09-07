@@ -40,16 +40,9 @@
   "description": "Weather forecast information",
   "screenshots": [
     {
-      "src": "assets/icon-192.png",
-      "type": "image/png",
-      "sizes": "192x192",
-      "form_factor": "narrow"
-    },
-    {
       "src": "assets/icon-512.png",
       "type": "image/png",
-      "sizes": "512x512",
-      "form_factor": "wide"
+      "sizes": "512x512"
     }
   ]
 }
